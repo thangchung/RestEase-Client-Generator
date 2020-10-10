@@ -14,7 +14,7 @@ namespace RestEaseClientGenerator.Mappers
         private readonly SchemaMapper _schemaMapper;
         private readonly OpenApiSpecVersion _openApiSpecVersion;
 
-        public ModelsMapper(GeneratorSettings settings, SchemaMapper schemaMapper, OpenApiSpecVersion openApiSpecVersion) : base(settings)
+        public ModelsMapper(OpenApiDocument document, GeneratorSettings settings, SchemaMapper schemaMapper, OpenApiSpecVersion openApiSpecVersion) : base(document, settings)
         {
             _schemaMapper = schemaMapper;
             _openApiSpecVersion = openApiSpecVersion;

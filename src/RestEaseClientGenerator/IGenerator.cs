@@ -9,7 +9,7 @@ namespace RestEaseClientGenerator
 {
     public interface IGenerator
     {
-        ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0);
+        ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, string path = null, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0);
 
         ICollection<GeneratedFile> FromFile(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic);
 

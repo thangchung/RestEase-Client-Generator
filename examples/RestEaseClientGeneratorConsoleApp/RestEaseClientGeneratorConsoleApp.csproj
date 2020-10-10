@@ -8,6 +8,8 @@
   <ItemGroup>
     <!--<Compile Remove="Infura\**\*.cs" />-->
     <!--<Compile Remove="Cog\**\*.cs" />-->
+    <Folder Include="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\Api\" />
+    <Folder Include="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\Models\" />
     <Folder Include="Examples\ComputerVision\" />
     <Folder Include="Examples\Drc\Api\" />
     <Folder Include="Examples\Drc\Models\" />
@@ -36,49 +38,55 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Examples\AzureRestStorage\blob.json">
+    <None Update="Examples\Azure\common-types\resource-management\v1\privatelinks.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\common.json">
+    <None Update="Examples\Azure\common-types\resource-management\v1\types.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\examples\TableOperationDelete.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\blob.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\examples\TableOperationGet.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\common.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\examples\TableOperationList.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\examples\TableOperationDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\examples\TableOperationPatch.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\examples\TableOperationGet.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\examples\TableOperationPut.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\examples\TableOperationList.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\examples\TableServicesGet.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\examples\TableOperationPatch.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\examples\TableServicesList.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\examples\TableOperationPut.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\examples\TableServicesPut.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\examples\TableServicesGet.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\file.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\examples\TableServicesList.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\privatelinks.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\examples\TableServicesPut.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\queue.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\file.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\storage.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\privatelinks.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\AzureRestStorage\table.json">
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\queue.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\storage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Azure\storage\resource-manager\Microsoft.Storage\stable\2019-06-01\table.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\cognitive-services-personalizer.json">

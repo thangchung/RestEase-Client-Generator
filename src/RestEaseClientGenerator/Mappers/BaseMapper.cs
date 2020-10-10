@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
@@ -9,10 +10,12 @@ namespace RestEaseClientGenerator.Mappers
     {
         protected string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
 
+        protected readonly OpenApiDocument Document;
         protected readonly GeneratorSettings Settings;
 
-        protected BaseMapper(GeneratorSettings settings)
+        protected BaseMapper(OpenApiDocument document, GeneratorSettings settings)
         {
+            Document = document;
             Settings = settings;
         }
 

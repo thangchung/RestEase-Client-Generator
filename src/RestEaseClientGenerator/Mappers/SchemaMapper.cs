@@ -15,7 +15,7 @@ namespace RestEaseClientGenerator.Mappers
     {
         public readonly IList<RestEaseEnum> Enums = new List<RestEaseEnum>();
 
-        public SchemaMapper(GeneratorSettings settings) : base(settings)
+        public SchemaMapper(OpenApiDocument document, GeneratorSettings settings) : base(document, settings)
         {
         }
 

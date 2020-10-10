@@ -10,28 +10,28 @@ namespace RestEaseClientGenerator.Mappers
 {
     internal class SecurityMapper : BaseMapper
     {
-        public SecurityMapper(GeneratorSettings settings) : base(settings)
+        public SecurityMapper(OpenApiDocument document, GeneratorSettings settings) : base(document, settings)
         {
         }
 
-        public RestEaseSecurity Map(OpenApiDocument openApiDocument)
+        public RestEaseSecurity Map()
         {
-            if (openApiDocument.SecurityRequirements != null && openApiDocument.SecurityRequirements.Any())
+            if (Document.SecurityRequirements != null && Document.SecurityRequirements.Any())
             {
-                return MapSwaggerVersion2(openApiDocument);
+                return MapSwaggerVersion2();
             }
 
-            if (openApiDocument.Components?.SecuritySchemes != null)
+            if (Document.Components?.SecuritySchemes != null)
             {
-                return MapOpenApiVersion3(openApiDocument);
+                return MapOpenApiVersion3();
             }
 
             return null;
         }
 
-        private RestEaseSecurity MapOpenApiVersion3(OpenApiDocument openApiDocument)
+        private RestEaseSecurity MapOpenApiVersion3()
         {
-            if (openApiDocument.Components.SecuritySchemes.TryGetValue("api_key", out var openApiSecurityScheme))
+            if (Document.Components.SecuritySchemes.TryGetValue("api_key", out var openApiSecurityScheme))
             {
                 return new RestEaseSecurity
                 {
@@ -43,9 +43,9 @@ namespace RestEaseClientGenerator.Mappers
             return null;
         }
 
-        private RestEaseSecurity MapSwaggerVersion2(OpenApiDocument openApiDocument)
+        private RestEaseSecurity MapSwaggerVersion2()
         {
-            var openApiSecuritySchemes = openApiDocument.SecurityRequirements
+            var openApiSecuritySchemes = Document.SecurityRequirements
                 .Select(sr => sr.Keys.FirstOrDefault())
                 .Where(k => k != null);
 

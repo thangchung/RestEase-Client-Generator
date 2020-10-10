@@ -18,13 +18,13 @@ namespace RestEaseClientGeneratorConsoleApp
             var azureRestStorageSettings = new GeneratorSettings
             {
                 Namespace = "AzureRestStorage",
-                ApiName = "AzureTableApi"
+                ApiName = "AzureTable",
+                SingleFile = false
             };
-            foreach (var file in generator.FromFile("Examples\\AzureRestStorage\\table.json", azureRestStorageSettings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
+            foreach (var file in generator.FromFile("Examples\\Azure\\storage\\resource-manager\\Microsoft.Storage\\stable\\2019-06-01\\table.json", azureRestStorageSettings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/AzureRestStorage/{file.Path}/{file.Name}", file.Content);
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Azure/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/{file.Path}/{file.Name}", file.Content);
             }
-
 
             // Corrupte enums
             var computerVisionSettings = new GeneratorSettings
@@ -66,7 +66,8 @@ namespace RestEaseClientGeneratorConsoleApp
             var iSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",
-                ApiName = "Infura"
+                ApiName = "Infura",
+                SingleFile = false
             };
             foreach (var file in generator.FromFile("Examples\\infura.yaml", iSettings, out OpenApiDiagnostic diagnosticInfura))
             {
@@ -79,7 +80,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
                 ApiName = "PetStore",
                 SupportExtensionXNullable = true,
-                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
+                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true,
+                SingleFile = false
             };
             foreach (var file in generator.FromFile("Examples\\petstore.yaml", petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {
@@ -89,7 +91,8 @@ namespace RestEaseClientGeneratorConsoleApp
             var ramlSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml",
-                ApiName = "HelloWorldRaml"
+                ApiName = "HelloWorldRaml",
+                SingleFile = false
             };
             foreach (var file in generator.FromFile("Examples\\helloworld.raml", ramlSettings, out var diagnosticHW))
             {
@@ -100,7 +103,8 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.wpraml",
                 ApiName = "wpraml",
-                DefineSharedMethodQueryParametersOnInterface = true
+                DefineSharedMethodQueryParametersOnInterface = true,
+                SingleFile = false
             };
             foreach (var file in generator.FromFile("Examples\\wp.raml", wpSettings, out var diagnosticWPR))
             {
@@ -118,7 +122,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 PreferredContentType = ContentType.ApplicationJson,
                 DefineAllMethodHeadersOnInterface = true,
                 MethodReturnType = MethodReturnType.Type,
-                PreferredEnumType = EnumType.Enum
+                PreferredEnumType = EnumType.Enum,
+                SingleFile = false
             };
             foreach (var file in generator.FromFile("Examples\\petstore-openapi3.json", petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {
@@ -172,7 +177,8 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Cog",
                 ApiName = "Cog",
-                ForceContentTypeToApplicationJson = true
+                ForceContentTypeToApplicationJson = true,
+                SingleFile = false
             };
             foreach (var file in generator.FromFile("Examples\\cognitive-services-personalizer.json", cogSettings, out var diagnosticCog))
             {
@@ -196,7 +202,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2",
                 ApiName = "FormRecognizerV2",
                 SupportExtensionXNullable = true,
-                PreferredSecurityDefinitionType = SecurityDefinitionType.Query
+                PreferredSecurityDefinitionType = SecurityDefinitionType.Query,
+                SingleFile = false
             };
             foreach (var file in generator.FromFile("Examples\\FormRecognizerV2.json", formSettings, out var diagnosticFormRecognizerV2))
             {

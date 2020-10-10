@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
+using RestEaseClientGenerator.Resolvers;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Utils;
@@ -15,13 +16,15 @@ namespace RestEaseClientGenerator.Mappers
     internal class InterfaceMapper : BaseMapper
     {
         private readonly SchemaMapper _schemaMapper;
+        private readonly ExternalReferenceResolver _referenceResolver;
 
-        public InterfaceMapper(GeneratorSettings settings, SchemaMapper schemaMapper) : base(settings)
+        public InterfaceMapper(OpenApiDocument document, GeneratorSettings settings, SchemaMapper schemaMapper, ExternalReferenceResolver referenceResolver) : base(document, settings)
         {
             _schemaMapper = schemaMapper;
+            _referenceResolver = referenceResolver;
         }
 
-        public RestEaseInterface Map(OpenApiDocument openApiDocument)
+        public RestEaseInterface Map()
         {
             string name = CSharpUtils.CreateValidIdentifier(Settings.ApiName, CasingType.Pascal);
             string interfaceName = $"I{name}Api";
@@ -30,10 +33,10 @@ namespace RestEaseClientGenerator.Mappers
             {
                 Name = interfaceName,
                 Namespace = Settings.Namespace,
-                Summary = openApiDocument.Info?.Description ?? name
+                Summary = Document.Info?.Description ?? name
             };
 
-            foreach (var path in openApiDocument.Paths)
+            foreach (var path in Document.Paths)
             {
                 MapPath(@interface, path.Key, path.Value);
             }
@@ -55,7 +58,7 @@ namespace RestEaseClientGenerator.Mappers
             //    }
             //}
 
-            var security = new SecurityMapper(Settings).Map(openApiDocument);
+            var security = new SecurityMapper(Document, Settings).Map();
             if (security != null && Settings.PreferredSecurityDefinitionType != SecurityDefinitionType.None)
             {
                 var header = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Header);
@@ -154,17 +157,23 @@ namespace RestEaseClientGenerator.Mappers
 
             string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
 
-            var headerParameterList = operation.Parameters
+            var referencedParameters = operation.Parameters
+                .Where(p => p.In == null && p.Reference != null)
+                .Select(p => _referenceResolver.ResolveAsOpenApiParameter(p.Reference));
+            var normalParameters = operation.Parameters.Where(p => p.In != null && p.Reference == null);
+            var allParameters = normalParameters.Union(referencedParameters);
+
+            var headerParameterList = allParameters
                 .Where(p => p.In == ParameterLocation.Header && p.Schema.GetSchemaType() != SchemaType.Object)
                 .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In))
                 .ToList();
 
-            var pathParameterList = operation.Parameters
+            var restEaseParameters = allParameters
                 .Where(p => p.In == ParameterLocation.Path && p.Schema.GetSchemaType() != SchemaType.Object)
-                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In))
-                .ToList();
+                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In));
+            var pathParameterList = (from p in path.Split(new char[] { '{', '}' }, StringSplitOptions.RemoveEmptyEntries) join re in restEaseParameters on p equals re.Identifier select re).ToList();
 
-            var queryParameterList = operation.Parameters
+            var queryParameterList = allParameters
                 .Where(p => p.In == ParameterLocation.Query && p.Schema.GetSchemaType() != SchemaType.Object)
                 .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In))
                 .ToList();
@@ -275,11 +284,6 @@ namespace RestEaseClientGenerator.Mappers
 
         private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)
         {
-            //if (schema == null)
-            //{
-            //    return null;
-            //}
-
             switch (schema.GetSchemaType())
             {
                 case SchemaType.Array:

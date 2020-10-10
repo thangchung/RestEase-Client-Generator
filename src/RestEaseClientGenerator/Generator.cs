@@ -10,6 +10,7 @@ using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Models.Internal;
+using RestEaseClientGenerator.Resolvers;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 
@@ -31,17 +32,19 @@ namespace RestEaseClientGenerator
                 document = reader.Read(File.OpenRead(path), out diagnostic);
             }
 
-            return FromDocument(document, settings, diagnostic.SpecificationVersion);
+            return FromDocument(document, settings, path, diagnostic.SpecificationVersion);
         }
 
-        public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
+        public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, string path = null, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
         {
-            var schemaMapper = new SchemaMapper(settings);
+            var externalReferenceResolver = new ExternalReferenceResolver(path);
+
+            var schemaMapper = new SchemaMapper(document, settings);
 
             IEnumerable<RestEaseModel> models;
             if (document.Components?.Schemas != null)
             {
-                models = new ModelsMapper(settings, schemaMapper, openApiSpecVersion)
+                models = new ModelsMapper(document, settings, schemaMapper, openApiSpecVersion)
                     .Map(document.Components.Schemas).ToList();
             }
             else
@@ -49,7 +52,7 @@ namespace RestEaseClientGenerator
                 models = Enumerable.Empty<RestEaseModel>();
             }
 
-            var @interface = new InterfaceMapper(settings, schemaMapper).Map(document);
+            var @interface = new InterfaceMapper(document, settings, schemaMapper, externalReferenceResolver).Map();
 
             var files = new List<GeneratedFile>();
 
