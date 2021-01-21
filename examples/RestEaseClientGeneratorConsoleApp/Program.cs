@@ -20,10 +20,11 @@ namespace RestEaseClientGeneratorConsoleApp
                 Namespace = "JiraV3",
                 ApiName = "JiraV3Api"
             };
-            foreach (var file in generator.FromFile("JiraV3.json", azureRestStorageSettings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
+            foreach (var file in generator.FromFile("Examples\\JiraV3.json", jiraV3Settings, out OpenApiDiagnostic diagnosticjiraV3))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/JiraV3/{file.Path}/{file.Name}", file.Content);
             }
+            return;
 
             var azureRestStorageSettings = new GeneratorSettings
             {
